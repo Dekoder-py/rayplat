@@ -1,25 +1,32 @@
 #include "raylib.h"
 
-#include <iostream>
-
 #define SCREEN_WIDTH (800)
 #define SCREEN_HEIGHT (450)
 
 #define WINDOW_TITLE "RayPlat"
 
 struct Player {
-    Vector2 position;
-    Texture2D sprite;
+    Vector2 position{};
+    Texture2D sprite{};
+    float movementSpeed = 250.0f;
 
-    void input() {
-        // TODO: Read input for WASD and move player
-        if (IsKeyPressed(KEY_SPACE)) {
-            std::cout << "SPACE\n";
+    void input(const float dt) {
+        if (IsKeyDown(KEY_W)) {
+            position.y -= movementSpeed * dt;
+        }
+        if (IsKeyDown(KEY_S)) {
+            position.y += movementSpeed * dt;
+        }
+        if (IsKeyDown(KEY_A)) {
+            position.x -= movementSpeed * dt;
+        }
+        if (IsKeyDown(KEY_D)) {
+            position.x += movementSpeed * dt;
         }
     }
 
-    void update() {
-        input();
+     void update(const float dt) {
+        input(dt);
     }
 
     void draw() const {
@@ -41,11 +48,13 @@ int main()
 
     while (!WindowShouldClose())
     {
+        const float dt = GetFrameTime();
+
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
 
-        player.update();
+        ClearBackground(RAYWHITE);
+        player.update(dt);
         player.draw();
 
         EndDrawing();
