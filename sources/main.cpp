@@ -21,8 +21,7 @@ int main()
 
         BeginDrawing();
 
-
-        ClearBackground(RAYWHITE);
+        ClearBackground(GREEN);
         player.update(dt);
         player.draw();
 
